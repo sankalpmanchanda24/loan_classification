@@ -1,0 +1,7 @@
+Model,CV ROC-AUC Mean,CV ROC-AUC Std
+SVM (RBF),0.9804,0.0037
+Logistic Regression,0.9802,0.0035
+XGBoost,0.976,0.0059
+Random Forest,0.9704,0.008
+KNN,0.9258,0.0074
+Decision Tree,0.8861,0.0065

@@ -1,0 +1,12 @@
+Loan Classification — Final Model Summary
+============================================================
+
+Best Model: XGBoost (Tuned)
+Best Params: {'learning_rate': 0.05, 'max_depth': 4, 'n_estimators': 200, 'subsample': 1.0}
+
+Test Set Performance:
+  Accuracy:  0.9130
+  Precision: 0.8887
+  Recall:    0.9545
+  F1 Score:  0.9204
+  ROC-AUC:   0.9791

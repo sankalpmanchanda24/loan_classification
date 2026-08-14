@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CreditWise AI | Loan Eligibility Predictor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+
+    <!-- Animated Background -->
+    <div class="bg-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <!-- Particle canvas -->
+    <canvas id="particles"></canvas>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-inner">
+            <div class="nav-logo">
+                <div class="logo-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <span class="logo-text">CreditWise <span class="ai-badge">AI</span></span>
+            </div>
+            <div class="nav-links">
+                <span class="nav-tag"><i class="fas fa-circle-check"></i> XGBoost Model</span>
+                <span class="nav-tag"><i class="fas fa-chart-line"></i> 92% Accuracy</span>
+                <span class="nav-tag"><i class="fas fa-shield-halved"></i> 30+ Parameters</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fas fa-sparkles"></i>
+                <span>Powered by Machine Learning</span>
+            </div>
+            <h1 class="hero-title">
+                Instant Loan
+                <span class="gradient-text">Eligibility</span>
+                Analysis
+            </h1>
+            <p class="hero-subtitle">
+                Our AI engine analyzes your financial profile across 30+ parameters using XGBoost classification to predict loan approval probability in seconds.
+            </p>
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-value">92%</span>
+                    <span class="stat-label">Accuracy</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat">
+                    <span class="stat-value">30+</span>
+                    <span class="stat-label">Features</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat">
+                    <span class="stat-value">&lt;1s</span>
+                    <span class="stat-label">Prediction</span>
+                </div>
+            </div>
+        </div>
+        <div class="hero-scroll">
+            <span>Fill your application below</span>
+            <i class="fas fa-chevron-down bounce"></i>
+        </div>
+    </section>
+
+    <!-- Main Form Container -->
+    <main class="main-container">
+
+        <!-- Progress Bar -->
+        <div class="progress-wrapper">
+            <div class="progress-steps">
+                <div class="step active" data-step="1">
+                    <div class="step-circle"><i class="fas fa-user"></i></div>
+                    <span>Personal</span>
+                </div>
+                <div class="step-line"></div>
+                <div class="step" data-step="2">
+                    <div class="step-circle"><i class="fas fa-briefcase"></i></div>
+                    <span>Employment</span>
+                </div>
+                <div class="step-line"></div>
+                <div class="step" data-step="3">
+                    <div class="step-circle"><i class="fas fa-wallet"></i></div>
+                    <span>Financial</span>
+                </div>
+                <div class="step-line"></div>
+                <div class="step" data-step="4">
+                    <div class="step-circle"><i class="fas fa-hand-holding-dollar"></i></div>
+                    <span>Loan</span>
+                </div>
+            </div>
+        </div>
+
+        <form id="loanForm">
+
+            <!-- Section 1: Personal Information -->
+            <div class="form-card" data-section="1">
+                <div class="card-header">
+                    <div class="card-icon personal">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <div>
+                        <h2>Personal Information</h2>
+                        <p>Basic demographic details about the applicant</p>
+                    </div>
+                </div>
+                <div class="fields-grid">
+                    <div class="field-group">
+                        <label for="age">
+                            <i class="fas fa-birthday-cake"></i>
+                            Age
+                        </label>
+                        <div class="input-wrapper">
+                            <input type="number" id="age" name="age" value="35" required min="18" max="100" placeholder="e.g. 35">
+                            <span class="input-unit">yrs</span>
+                        </div>
+                        <div class="field-hint">Must be between 18 and 100</div>
+                    </div>
+
+                    <div class="field-group">
+                        <label for="gender">
+                            <i class="fas fa-venus-mars"></i>
+                            Gender
+                        </label>
+                        <div class="select-wrapper">
+                            <select id="gender" name="gender">
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                            <i class="fas fa-chevron-down select-arrow"></i>
+                        </div>
+                    </div>
+
+                    <div class="field-group">
+                        <label for="marital_status">
+                            <i class="fas fa-heart"></i>
+                            Marital Status
+                        </label>
+                        <div class="select-wrapper">
+                            <select id="marital_status" name="marital_status">
+                                <option value="Married">Married</option>
+                                <option value="Single">Single</option>
+                                <option value="Divorced">Divorced</option>
+                            </select>
+                            <i class="fas fa-chevron-down select-arrow"></i>
+                        </div>
+                    </div>
+
+                    <div class="field-group">
+                        <label for="dependents">
+                            <i class="fas fa-child"></i>
+                            Dependents
+                        </label>
+                        <div class="input-wrapper">
+                            <input type="number" id="dependents" name="dependents" value="0" min="0" max="10" placeholder="0">
+                            <span class="input-unit">ppl</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 2: Employment & Education -->
+            <div class="form-card" data-section="2">
+                <div class="card-header">
+                    <div class="card-icon employment">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <div>
+                        <h2>Employment & Education</h2>
+                        <p>Professional background and qualifications</p>
+                    </div>
+                </div>
+                <div class="fields-grid">
+                    <div class="field-group">
+                        <label for="education">
+                            <i class="fas fa-graduation-cap"></i>
+                            Education Level
+                        </label>
+                        <div class="select-wrapper">
+                            <select id="education" name="education">
+                                <option value="Bachelor">Bachelor's Degree</option>
+                                <option value="Master">Master's Degree</option>
+                                <option value="PhD">PhD / Doctorate</option>
+                                <option value="High School">High School</option>
+                            </select>
+                            <i class="fas fa-chevron-down select-arrow"></i>
+                        </div>
+                    </div>
+
+                    <div class="field-group">
+                        <label for="employment_status">
+                            <i class="fas fa-id-badge"></i>
+                            Employment Status
+                        </label>
+                        <div class="select-wrapper">
+                            <select id="employment_status" name="employment_status">
+                                <option value="Salaried">Salaried</option>
+                                <option value="Business">Business Owner</option>
+                                <option value="Self-Employed">Self-Employed</option>
+                                <option value="Unemployed">Unemployed</option>
+                            </select>
+                            <i class="fas fa-chevron-down select-arrow"></i>
+                        </div>
+                    </div>
+
+                    <div class="field-group">
+                        <label for="years_employed">
+                            <i class="fas fa-clock"></i>
+                            Years Employed
+                        </label>
+                        <div class="input-wrapper">
+                            <input type="number" id="years_employed" name="years_employed" value="5" min="0" placeholder="5">
+                            <span class="input-unit">yrs</span>
+                        </div>
+                    </div>
+
+                    <div class="field-group">
+                        <label for="property_area">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Property Area
+                        </label>
+                        <div class="select-wrapper">
+                            <select id="property_area" name="property_area">
+                                <option value="Urban">Urban</option>
+                                <option value="Semiurban">Semiurban</option>
+                                <option value="Rural">Rural</option>
+                            </select>
+                            <i class="fas fa-chevron-down select-arrow"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 3: Financial Details -->
+            <div class="form-card" data-section="3">
+                <div class="card-header">
+                    <div class="card-icon financial">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                    <div>
+                        <h2>Financial Profile</h2>
+                        <p>Income, credit history, and debt information</p>
+                    </div>
+                </div>
+                <div class="fields-grid fields-grid-3">
+                    <div class="field-group">
+                        <label for="annual_income">
+                            <i class="fas fa-dollar-sign"></i>
+                            Annual Income
+                        </label>
+                        <div class="input-wrapper">
+                            <span class="input-prefix">$</span>
+                            <input type="number" id="annual_income" name="annual_income" value="65000" step="100" placeholder="65000">
+                        </div>
+                        <div class="field-hint" id="income-hint">≈ $5,417 / month</div>
+                    </div>
+
+                    <div class="field-group">
+                        <label for="credit_score">
+                            <i class="fas fa-star-half-stroke"></i>
+                            Credit Score
+                        </label>
+                        <div class="input-wrapper">
+                            <input type="number" id="credit_score" name="credit_score" value="720" min="300" max="850" placeholder="720">
+                            <span class="credit-badge" id="creditBadge">Good</span>
+                        </div>
+                        <div class="credit-meter">
+                            <div class="credit-fill" id="creditFill"></div>
+                        </div>
+                    </div>
+
+                    <div class="field-group">
+                        <label for="credit_history_years">
+                            <i class="fas fa-history"></i>
+                            Credit History
+                        </label>
+                        <div class="input-wrapper">
+                            <input type="number" id="credit_history_years" name="credit_history_years" value="10" placeholder="10">
+                            <span class="input-unit">yrs</span>
+                        </div>
+                    </div>
+
+                    <div class="field-group">
+                        <label for="existing_loans">
+                            <i class="fas fa-file-invoice-dollar"></i>
+                            Existing Loans
+                        </label>
+                        <div class="input-wrapper">
+                            <input type="number" id="existing_loans" name="existing_loans" value="0" min="0" placeholder="0">
+                            <span class="input-unit">loans</span>
+                        </div>
+                    </div>
+
+                    <div class="field-group">
+                        <label for="total_debt">
+                            <i class="fas fa-credit-card"></i>
+                            Total Debt
+                        </label>
+                        <div class="input-wrapper">
+                            <span class="input-prefix">$</span>
+                            <input type="number" id="total_debt" name="total_debt" value="15000" placeholder="15000">
+                        </div>
+                    </div>
+
+                    <div class="field-group">
+                        <label for="debt_to_income">
+                            <i class="fas fa-percent"></i>
+                            Debt-to-Income Ratio
+                        </label>
+                        <div class="input-wrapper">
+                            <input type="number" id="debt_to_income" name="debt_to_income" value="0.35" step="0.01" placeholder="0.35">
+                            <span class="dti-badge" id="dtiBadge">Moderate</span>
+                        </div>
+                        <div class="dti-bar">
+                            <div class="dti-fill" id="dtiFill"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 4: Loan Request -->
+            <div class="form-card" data-section="4">
+                <div class="card-header">
+                    <div class="card-icon loan">
+                        <i class="fas fa-hand-holding-dollar"></i>
+                    </div>
+                    <div>
+                        <h2>Loan Request Details</h2>
+                        <p>Specifics of the loan you're applying for</p>
+                    </div>
+                </div>
+                <div class="fields-grid fields-grid-3">
+                    <div class="field-group">
+                        <label for="loan_amount">
+                            <i class="fas fa-money-bill-wave"></i>
+                            Loan Amount
+                        </label>
+                        <div class="input-wrapper">
+                            <span class="input-prefix">$</span>
+                            <input type="number" id="loan_amount" name="loan_amount" value="50000" placeholder="50000">
+                        </div>
+                    </div>
+
+                    <div class="field-group">
+                        <label for="interest_rate">
+                            <i class="fas fa-tag"></i>
+                            Interest Rate
+                        </label>
+                        <div class="input-wrapper">
+                            <input type="number" id="interest_rate" name="interest_rate" value="7.5" step="0.1" placeholder="7.5">
+                            <span class="input-unit">%</span>
+                        </div>
+                    </div>
+
+                    <div class="field-group">
+                        <label for="loan_term">
+                            <i class="fas fa-calendar-days"></i>
+                            Loan Term
+                        </label>
+                        <div class="input-wrapper">
+                            <input type="number" id="loan_term" name="loan_term" value="48" placeholder="48">
+                            <span class="input-unit">mo</span>
+                        </div>
+                    </div>
+
+                    <div class="field-group">
+                        <label for="emi">
+                            <i class="fas fa-receipt"></i>
+                            Monthly EMI
+                        </label>
+                        <div class="input-wrapper">
+                            <span class="input-prefix">$</span>
+                            <input type="number" id="emi" name="emi" value="1200" placeholder="1200">
+                        </div>
+                    </div>
+
+                    <div class="field-group">
+                        <label for="loan_purpose">
+                            <i class="fas fa-bullseye"></i>
+                            Loan Purpose
+                        </label>
+                        <div class="select-wrapper">
+                            <select id="loan_purpose" name="loan_purpose">
+                                <option value="Home">🏠 Home</option>
+                                <option value="Auto">🚗 Auto</option>
+                                <option value="Personal">👤 Personal</option>
+                                <option value="Business">💼 Business</option>
+                                <option value="Education">🎓 Education</option>
+                                <option value="Medical">🏥 Medical</option>
+                            </select>
+                            <i class="fas fa-chevron-down select-arrow"></i>
+                        </div>
+                    </div>
+
+                    <div class="field-group">
+                        <label for="has_cosigner">
+                            <i class="fas fa-user-plus"></i>
+                            Has Co-signer?
+                        </label>
+                        <div class="toggle-group">
+                            <label class="toggle-option">
+                                <input type="radio" name="has_cosigner" value="No" checked>
+                                <span class="toggle-btn">No</span>
+                            </label>
+                            <label class="toggle-option">
+                                <input type="radio" name="has_cosigner" value="Yes">
+                                <span class="toggle-btn">Yes</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="submit-section">
+                <div class="submit-info">
+                    <i class="fas fa-lock"></i>
+                    <span>Your data is processed securely and never stored</span>
+                </div>
+                <button type="submit" id="submitBtn" class="submit-btn">
+                    <span class="btn-text">
+                        <i class="fas fa-microchip"></i>
+                        Analyze My Application
+                    </span>
+                    <div class="btn-shine"></div>
+                </button>
+            </div>
+
+        </form>
+    </main>
+
+    <!-- Result Modal -->
+    <div id="resultModal" class="modal-overlay" role="dialog" aria-modal="true">
+        <div class="modal-card">
+            <!-- Close button -->
+            <button class="modal-close" onclick="closeModal()" aria-label="Close">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <!-- Loader State -->
+            <div id="loaderState" class="modal-state">
+                <div class="ai-loader">
+                    <div class="loader-ring"></div>
+                    <div class="loader-ring loader-ring-2"></div>
+                    <div class="loader-ring loader-ring-3"></div>
+                    <div class="loader-core">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                </div>
+                <h3>Analyzing Application</h3>
+                <div class="loading-steps">
+                    <div class="loading-step active" id="step1">
+                        <i class="fas fa-check-circle"></i> Validating inputs
+                    </div>
+                    <div class="loading-step" id="step2">
+                        <i class="fas fa-circle"></i> Running XGBoost model
+                    </div>
+                    <div class="loading-step" id="step3">
+                        <i class="fas fa-circle"></i> Computing probability
+                    </div>
+                </div>
+            </div>
+
+            <!-- Result State -->
+            <div id="resultState" class="modal-state hidden">
+                <div class="result-icon-wrap" id="resultIconWrap">
+                    <div class="result-icon" id="resultIcon"></div>
+                    <div class="result-ripple"></div>
+                </div>
+
+                <div class="result-badge" id="resultBadge"></div>
+                <h2 class="result-title" id="statusText"></h2>
+                <p class="result-subtitle" id="msgText"></p>
+
+                <div class="probability-section">
+                    <div class="prob-labels">
+                        <span>Confidence Score</span>
+                        <span id="probPercent" class="prob-value">0%</span>
+                    </div>
+                    <div class="probability-track">
+                        <div class="probability-fill" id="probFill"></div>
+                    </div>
+                </div>
+
+                <!-- Key Factors -->
+                <div class="factors-grid" id="factorsGrid"></div>
+
+                <button onclick="closeModal()" class="new-app-btn">
+                    <i class="fas fa-rotate-left"></i>
+                    Start New Application
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast" role="alert"></div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
